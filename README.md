@@ -6,7 +6,6 @@ It exposes **5 REST APIs** (with 1 more under development) and securely communic
 
 The project demonstrates a **microservice architecture**, where **BMS handles banking operations** and integrates with **LMS for loan services**.
 
----
 
 ## ⚙️ Features
 
@@ -16,7 +15,6 @@ The project demonstrates a **microservice architecture**, where **BMS handles ba
 * ✅ Error handling with readable responses
 * ✅ Modular Spring Boot architecture (Controller → Service → Repository → Entity → DTO)
 
----
 
 ## 📡 APIs in BMS
 
@@ -83,7 +81,6 @@ The project demonstrates a **microservice architecture**, where **BMS handles ba
 
 6. **\[Upcoming Endpoint]** → To be added (e.g., account management, loan history, etc.)
 
----
 
 ## 🔗 Communication with LMS
 
