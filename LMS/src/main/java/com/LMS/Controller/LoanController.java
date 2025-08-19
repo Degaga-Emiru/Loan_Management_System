@@ -30,7 +30,7 @@ public class LoanController {
     @Autowired
     private UserReppo userReppo;
 
-    // ✅ Utility method for extracting current user from token
+    //  Utility method for extracting current user from token
     private Users getCurrentUser(HttpServletRequest request) {
         String authHeader = request.getHeader("Authorization");
         if (authHeader == null || authHeader.isEmpty()) {
@@ -122,9 +122,7 @@ public class LoanController {
         return loanService.repayLoan(accountNumber, amount, currentUser);
     }
 
-
-
-    /** APPROVE LOAN (ADMIN only) */
+    /** APPROVE LOAN (ADMIN only)    */
     @PostMapping("/loan/approve")
     public ResponseEntity<?> approveLoan(@RequestParam int loanApplicationId,
                                          HttpServletRequest request) {
@@ -136,3 +134,4 @@ public class LoanController {
         return ResponseEntity.ok(loanService.approveLoan(loanApplicationId));
     }
 }
+
