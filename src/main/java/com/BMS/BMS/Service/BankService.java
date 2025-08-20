@@ -1,15 +1,24 @@
 package com.BMS.BMS.Service;
 
+import com.BMS.BMS.DTO.LoanSummaryDTO;
+
 import com.BMS.BMS.Models.*;
 import com.BMS.BMS.Reppo.*;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+
 import java.util.Optional;
+
 
 @Service
 public class BankService {
+	
+	@Autowired
+	private MailService mailService;
 
     private final CustomerRepository customerRepository;
     private final BankFundRepository bankFundRepository;
@@ -49,7 +58,22 @@ public class BankService {
         Transaction tx = new Transaction(microDepositAmount, "MICRO_DEPOSIT", LocalDateTime.now(), customer);
         transactionRepository.save(tx);
 
-        return "Micro deposit of $" + microDepositAmount + " sent to account: " + accountNumber;
+        // ✅ Send email to customer
+        try {
+            String subject = "💰 Micro Deposit Sent to Your Account";
+            String text = "Hello " + customer.getName() + ",\n\n" +
+                          "A micro deposit of $" + microDepositAmount + " has been sent to your account (" +
+                          accountNumber + ").\n" +
+                          "Please check your bank account and verify the amount.\n\n" +
+                          "Thank you!";
+            mailService.sendSimpleEmail(customer.getEmail(), subject, text);
+        } catch (Exception e) {
+            e.printStackTrace(); 
+        }
+
+        return "A micro deposit has been sent to your account " + accountNumber + 
+        	       ". You can check your email to verify your account, or visit the bank to view the transaction and complete verification.";
+
     }
 
     public String confirmMicroDeposit(String accountNumber, BigDecimal depositAmount) {
@@ -149,6 +173,20 @@ public class BankService {
         return bankFundRepository.findAll().stream()
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("Bank fund record missing"));
+    }
+    
+    public LoanSummaryDTO getLoanSummary(String accountNumber) {
+        Optional<Customer> customerOpt = customerRepository.findByAccountNumber(accountNumber);
+        if (customerOpt.isEmpty()) {
+            throw new RuntimeException("Account not found");
+        }
+
+        Customer customer = customerOpt.get();
+        return new LoanSummaryDTO(
+                customer.getLoanPaid(),
+                customer.getLoanRemaining(),
+                customer.getTotalLoan()
+        );
     }
 }
 

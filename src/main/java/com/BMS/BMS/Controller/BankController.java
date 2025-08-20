@@ -1,9 +1,12 @@
 package com.BMS.BMS.Controller;
 
+import com.BMS.BMS.DTO.LoanSummaryDTO;
+
 import com.BMS.BMS.Service.BankService;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -48,5 +51,11 @@ public class BankController {
                 payload.get("accountNumber"),
                 new BigDecimal(payload.get("repaymentAmount"))
         );
+    }
+    
+    /** ✅ Get Loan Summary (loanPaid, loanRemaining, totalLoan) */
+    @GetMapping("/loan-summary/{accountNumber}")
+    public LoanSummaryDTO getLoanSummary(@PathVariable String accountNumber) {
+        return bankService.getLoanSummary(accountNumber);
     }
 }
