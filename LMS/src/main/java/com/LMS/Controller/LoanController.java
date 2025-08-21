@@ -42,7 +42,7 @@ public class LoanController {
         return userReppo.findByUsername(username);
     }
 
-    /** STEP 2: send account to BMS (USER only) */
+    /** STEP 2: send account to BMS (Customer only) */
     @PostMapping("/account/send")
     public ResponseEntity<?> sendAccountToBms(@RequestBody Map<String, String> payload,
                                               HttpServletRequest request) {
@@ -134,4 +134,5 @@ public class LoanController {
         return ResponseEntity.ok(loanService.approveLoan(loanApplicationId));
     }
 }
+
 
