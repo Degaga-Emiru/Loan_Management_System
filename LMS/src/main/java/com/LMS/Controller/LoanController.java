@@ -129,6 +129,18 @@ public class LoanController {
 
         return ResponseEntity.ok(loanService.approveLoan(loanApplicationId));
     }
+    // this is what i added the reject endpoint
+    @PostMapping("/loan/reject")
+    public ResponseEntity<?> rejectLoan(@RequestParam int loanApplicationId,
+                                        HttpServletRequest request) {
+        Users currentUser = getCurrentUser(request);
+        if (currentUser == null || !"ROLE_ADMIN".equals(currentUser.getRole())) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body("❌ Only admin can reject loans");
+        }
+
+        return ResponseEntity.ok(loanService.rejectLoan(loanApplicationId));
+    }
 
     /** ADMIN: view pending applications with BMS summary */
     @GetMapping("/loan/pending")
