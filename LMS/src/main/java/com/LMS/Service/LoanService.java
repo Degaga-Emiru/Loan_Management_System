@@ -561,6 +561,7 @@ public class LoanService {
                     app.getEmiPerMonth(),
                     app.getTotalEmi()
             );
+
             appDTOs.add(dto);
         }
 
@@ -627,4 +628,17 @@ public class LoanService {
                 ))
                 .collect(Collectors.toList());
     }
+
+    public Object rejectLoan(int loanApplicationId) {
+        LoanApplication loanApplication = loanApplicationRepository.findById(loanApplicationId)
+                .orElseThrow(() -> new IllegalArgumentException("Loan application not found"));
+
+        // Update the loan application status to "REJECTED"
+        loanApplication.setStatus("REJECTED");
+        loanApplicationRepository.save(loanApplication);
+
+        // Return a confirmation message or the updated loan application
+        return "✅ Loan application ID " + loanApplicationId + " has been successfully rejected.";
+    }
+
 }
