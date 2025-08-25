@@ -245,7 +245,8 @@ public class LoanService {
                 loan.setRemainingAmount(BigDecimal.ZERO);
             }
             loanRepo.save(loan);
-        } else {
+        } 
+        else {
             repayment.setStatus("FAILED");
             repaymentRepo.save(repayment);
         }
