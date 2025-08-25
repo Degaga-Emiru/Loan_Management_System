@@ -17,7 +17,7 @@ public class UserController {
 	@Autowired
 	UserService service;
 	
-	@PostMapping("/register")
+	@PostMapping("/register")//register
     public ResponseEntity<?> register(@RequestBody Users user) {
         try {
             Users savedUser = service.register(user);
@@ -33,4 +33,5 @@ public class UserController {
         return service.verify(user);
     }
 }
+
 
