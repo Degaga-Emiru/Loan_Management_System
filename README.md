@@ -4,6 +4,7 @@ approvals, repayments, and account management. The system provides role-based ac
 ensuring secure and efficient loan operations.
                                   Features
                             👥 Role-Based Access
+                            
 Customer Portal
 
 Apply for new loans with intuitive forms
