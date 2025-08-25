@@ -12,8 +12,6 @@ import com.LMS.LMS.Controller.UserPrincipal;
 import com.LMS.LMS.Model.Users;
 import com.LMS.LMS.Reppo.UserReppo;
 
-
-
 @Service
 public class MyUserDetailService implements UserDetailsService{
 	
@@ -31,8 +29,6 @@ public class MyUserDetailService implements UserDetailsService{
 		return new UserPrincipal(user);
 		
 	}
-
-	
 
 }
 
