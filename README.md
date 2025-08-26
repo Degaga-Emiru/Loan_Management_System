@@ -1,424 +1,260 @@
-Loan Management System (LMS) — React + Spring Boot (with BMS integration)
+Loan Management System (LMS)
+React + Spring Boot + PostgreSQL + BMS Integration
 
-A full-stack Loan Management System built with React (TypeScript) on the front end and Spring Boot (Java) on the back end, integrated with a lightweight Bank Management System (BMS) client for account verification, loan disbursement, and repayments.
+A full-stack Loan Management System built with React (TypeScript) on the frontend and Spring Boot on the backend,
+fully integrated with a Bank Management System (BMS) for account verification, loan disbursement, and repayments.
+📑 Table of Contents
 
-This repo is structured so you can clone, run locally, and extend for production.
+✨ Features
 
-Table of contents
+🛠️ Tech Stack
 
-Features
+🏗️ Architecture
 
-Architecture
+📂 Project Structure
 
-Monorepo structure
+⚡ Prerequisites
 
-Prerequisites
+🚀 Setup & Installation
 
-Backend setup (Spring Boot)
+Backend Setup
 
-Frontend setup (React + Vite)
+Frontend Setup
 
-Environment variables
+🔑 Environment Variables
 
-Key flows
+🔄 Key Flows
 
-API reference
+📡 API Reference
 
-Frontend integration details
+🎨 Frontend Integration
 
-Database schema (high level)
+🗄️ Database Schema
 
-Common pitfalls & fixes
+⚠️ Common Pitfalls & Fixes
 
-Roadmap
+🛣️ Roadmap
 
-Contributing
+🤝 Contributing
 
-License
+📄 License
 
-Features
-End-user (customer)
+✨ Features
+For Customers
 
-Register, login (JWT-based)
+🔹 Secure JWT-based authentication (Register & Login)
 
-Bank account verification via micro-deposit (BMS client)
+🔹 Bank account verification via micro-deposit BMS integration
 
-Apply for a loan (EMI auto-calculated)
+🔹 Apply for loans with auto-calculated EMI
 
-View active loans, applications, and EMI schedule
+🔹 View active loans, loan applications, and EMI schedules
 
-Repay loan amounts
+🔹 Make repayments directly via LMS
 
-Update password (with old password check)
+🔹 Update passwords with old password verification
 
-Admin
+For Admins
 
-Dashboard (stats: total apps, pending, approved, total disbursed)
+📊 Admin Dashboard — statistics on loans, applications, and disbursements
 
-Pending applications review with BMS snapshot (paid/remaining/total)
+🔍 Review pending applications with BMS account snapshots
 
-Approve & disburse loans (auto generates EMI schedule)
+✅ Approve or ❌ Reject loan applications
 
-Reject applications
+💳 Auto-disburse loans with BMS integration
 
-See all loan applications / loans summary
+📝 View all applications & loan summaries
 
-Architecture
+🛠️ Tech Stack
+Category	Technology
+Frontend	React (TypeScript), Vite, Axios, Tailwind CSS
+Backend	Spring Boot 3, Java 17, Spring Security, JWT
+Database	PostgreSQL 14+
+API Client	Axios (public & protected APIs)
+Deployment	Docker (optional), Vercel/Netlify (frontend)
+Bank System	BMS Client (account verification, loan disbursement, repayments)
+🏗️ Architecture
 flowchart LR
-  A[Browser (React + Vite)] -->|Axios| B[Spring Boot API (/api/lms)]
+  A[React + Vite (Frontend)] -->|Axios| B[Spring Boot API (/api/lms)]
   B --> C[AuthService / JWT]
   B --> D[LoanService]
   B --> E[CreditScoreService]
   B --> F[MailService]
-  B --> G[BmsClient (Bank Mgmt System)]
-  D --> H[(PostgreSQL)]
+  B --> G[BMS Client (Bank Integration)]
+  D --> H[(PostgreSQL Database)]
   C --> H
   E --> H
-  D -->|disburse / repay / verify| G
+  D -->|Disburse / Repay / Verify| G
 
+📂 Project Structure
+lms/
+├── backend/
+│   ├── src/main/java/com/lms/
+│   │   ├── controller/      # REST API endpoints
+│   │   ├── service/         # Business logic
+│   │   ├── model/           # JPA entities
+│   │   ├── dto/             # Request & Response DTOs
+│   │   ├── repository/      # Spring Data JPA repositories
+│   │   ├── security/        # JWT configs, filters, authentication
+│   │   └── client/          # BMS client integration
+│   └── src/main/resources/
+│       └── application.properties
+└── frontend/
+    └── src/
+        ├── api/            # Axios API clients
+        ├── components/     # Reusable UI components
+        ├── contexts/       # AuthContext
+        ├── lib/            # Axios instances (api & publicApi)
+        ├── pages/          # Pages (Admin, Profile, Dashboard, etc.)
+        └── services/       # Auth & Loan services
 
-React app (TypeScript) talks to:
-
-publicApi (no auth) for /login, /register
-
-api (JWT) for /api/lms/**
-
-Spring Boot exposes REST endpoints, issues/validates JWT, calculates EMI, and calls BMS client (stub or real integration) to:
-
-verify accounts (micro-deposit)
-
-disburse loans
-
-receive repayments
-
-PostgreSQL stores users, bank accounts, applications, loans, EMI schedule, repayments, credit score
-
-Monorepo structure
-.
-├─ backend/
-│  ├─ src/main/java/com/LMS/LMS/
-│  │  ├─ Controller/           # REST endpoints
-│  │  ├─ Service/              # Business logic (LoanService, CreditScoreService, MailService)
-│  │  ├─ Model/                # JPA entities (Users, BankAccount, LoanApplication, Loan, LoanEmiSchedule, Repayment, CreditScore)
-│  │  ├─ DTO/                  # Response/Request DTOs (LoanAppDto, LoanDTO, PendingLoanResponseDto, LoanAdminResponseDto, etc.)
-│  │  ├─ Reppo/                # Spring Data repositories
-│  │  ├─ Security/             # JWT config, filters, auth
-│  │  └─ Client/               # BmsClient (bank integration)
-│  └─ src/main/resources/
-│     └─ application.properties
-└─ frontend/
-   └─ src/
-      ├─ api/                  # adminLoanApi.ts, loanApi.ts
-      ├─ components/           # UI components (ChangePasswordModal, etc.)
-      ├─ contexts/             # AuthContext (login, token, user profile)
-      ├─ lib/                  # axios clients: api (JWT, /api/lms), publicApi (no auth)
-      ├─ pages/                # AdminDashboard, AdminApplications, Profile
-      └─ services/             # auth.ts (login/register/loadMe/updatePassword)
-
-Prerequisites
+⚡ Prerequisites
 
 Java 17+
 
-Maven (or Gradle) — sample commands use Maven
+Maven or Gradle
 
-Node.js 18+ and npm (or pnpm/yarn)
+Node.js 18+
 
-PostgreSQL 14+ (or change JDBC URL to your DB)
+PostgreSQL 14+
 
-Optional: Docker for Postgres
+Docker (optional)
 
-Backend setup (Spring Boot)
+🚀 Setup & Installation
+1. Backend Setup (Spring Boot)
+# Clone the repository
+git clone https://github.com/your-username/lms.git
+cd lms/backend
 
-Create a Postgres DB (example):
-
+# Create PostgreSQL DB
 createdb lms
 
-
-Or with Docker:
-
+# Or via Docker
 docker run --name lms-postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=lms -p 5432:5432 -d postgres:14
 
-
-Configure backend/src/main/resources/application.properties:
-
+# Update application.properties
 server.port=8081
-
 spring.datasource.url=jdbc:postgresql://localhost:5432/lms
 spring.datasource.username=postgres
 spring.datasource.password=postgres
-
 spring.jpa.hibernate.ddl-auto=update
-spring.jpa.show-sql=true
 
-# JWT
-app.jwt.secret=change-this-super-secret
-app.jwt.expiration=86400000
-
-# (Optional) email
-spring.mail.host=smtp.example.com
-spring.mail.username=...
-spring.mail.password=...
-
-
-Run backend:
-
-cd backend
+# Run the backend
 mvn spring-boot:run
 
 
-It should start on http://localhost:8081
- and expose protected APIs under /api/lms/**.
+Backend will run at: http://localhost:8081
 
-Frontend setup (React + Vite)
-
-Configure axios base URLs
-
-frontend/src/lib/api.ts (protected with JWT):
-
-import axios from "axios";
-
-const api = axios.create({
-  baseURL: "http://localhost:8081/api/lms",
-});
-
-api.interceptors.request.use((config) => {
-  const token = localStorage.getItem("token");
-  if (token) config.headers.Authorization = `Bearer ${token}`;
-  return config;
-});
-
-export default api;
-
-
-frontend/src/lib/publicApi.ts (public, no JWT):
-
-import axios from "axios";
-
-const publicApi = axios.create({
-  baseURL: "http://localhost:8081",
-});
-
-export default publicApi;
-
-
-Install & run:
-
-cd frontend
+2. Frontend Setup (React + Vite)
+cd lms/frontend
 npm install
 npm run dev
 
 
-The app should open on http://localhost:5173
- (or similar).
+Frontend will run at: http://localhost:5173
 
-Environment variables
+🔑 Environment Variables
 
-You can also drive base URLs from a .env in frontend/:
+Create a .env file in frontend/:
 
-# frontend/.env
 VITE_API_BASE=http://localhost:8081/api/lms
 VITE_PUBLIC_BASE=http://localhost:8081
 
+🔄 Key Flows
 
-Then use them in the axios clients instead of hardcoding.
+Bank Verification (via BMS)
 
-Key flows
-1) Bank verification (via BMS)
+LMS sends a micro-deposit → waits for confirmation
 
-Send account to BMS: user submits account number → LMS invokes BmsClient.verifyAccount() (simulates micro-deposit → WAITING_VERIFICATION)
+User enters deposited amount → account marked VERIFIED
 
-Confirm micro-deposit: user enters deposit amount → LMS calls BmsClient.confirmMicroDeposit() → marks account VERIFIED and adjusts credit score.
+Apply for Loan
 
-2) Apply for a loan
+User must have verified account
 
-User must have VERIFIED bank account and no outstanding BMS debt.
+EMI auto-calculated → status = PENDING
 
-EMI is calculated (10% annual interest by default).
+Admin Approval
 
-Application saved as PENDING and credit score adjusted slightly.
+Admin checks application + BMS snapshot
 
-3) Admin review & approve
+Approve → LMS calls BMS.disburseLoan()
 
-Admin opens Pending Review: each row shows a BMS snapshot (paid/remaining/total).
+EMI schedule auto-generated
 
-If outstanding exists → auto-reject on approval attempt (and notify).
+Loan Repayment
 
-On approval → LMS calls BmsClient.disburseLoan(), creates Loan, generates EMI schedule, updates credit score.
+User pays → LMS calls BMS.repayLoan()
 
-4) Repayment
+Updates loan status, EMIs, and credit score
 
-User posts a repayment → LMS calls BmsClient.repayLoan() → updates Repayment, re-apportions EMI interest/principal, recalculates future EMIs if needed, updates credit score.
+📡 API Reference
+Endpoint	Method	Description
+/register	POST	Register a new user
+/login	POST	Login and receive JWT
+/api/lms/profile	GET	Get current user profile
+/api/lms/bank/verify	POST	Initiate bank verification
+/api/lms/bank/confirm	POST	Confirm micro-deposit
+/api/lms/loan/apply	POST	Apply for a loan
+/api/lms/loan/pending	GET	Get pending loan applications
+/api/lms/loan/approve	POST	Approve loan
+/api/lms/loan/reject	POST	Reject loan
+/api/lms/loan/repay	POST	Repay loan EMI
+🗄️ Database Schema
 
-API reference
+users → id, username, email, password_hash, role, last_login
 
-Prefix for protected endpoints: /api/lms
+bank_account → id, user_id, account_number, status
 
-Auth
+loan_application → id, user_id, loan_amount, purpose, term_months, status
 
-POST /login — returns JWT (in header Authorization: Bearer ... or body)
+loan → id, user_id, total_loan, remaining_amount, emi_amount
 
-POST /register
+loan_emi_schedule → id, loan_id, emi_amount, principal, interest, due_date
 
-GET /api/lms/profile — current user (requires token)
+repayment → id, loan_id, amount, repayment_date, status
 
-PUT /api/lms/updatePassword — body: { oldPassword, newPassword }
+credit_score → id, user_id, score
 
-Bank (names may vary depending on your controller)
+⚠️ Common Pitfalls & Fixes
 
-POST /api/lms/bank/verify — body: { accountNumber } (sends micro-deposit, returns WAITING)
+CORS Issues → Add CorsConfig.java to whitelist React URL.
 
-POST /api/lms/bank/confirm — body: { accountNumber, amount } (verifies)
+400 on Update Password → Ensure correct old password validation.
 
-Loan (customer)
+Date Display Issues → Send proper timestamps from backend.
 
-POST /api/lms/loan/apply — body: { accountNumber, amount, purpose, termMonths }
+Numbers as Strings → Frontend handles both strings and numbers.
 
-GET /api/lms/applications/{accountNumber} — your applications
+🛣️ Roadmap
 
-GET /api/lms/active/{accountNumber} — active loans
+✅ JWT Auth + BMS Integration
 
-Loan (admin)
+✅ Loan Applications + EMI Calculations
 
-GET /api/lms/loan/pending — list of PendingLoanResponseDto (application + BMS summary)
+✅ Admin Dashboard + Approval Flow
 
-POST /api/lms/loan/approve?loanApplicationId={id}
+🔄 Role-based Method Security
 
-POST /api/lms/loan/reject?loanApplicationId={id}
+📩 Email Notifications
 
-Admin
+📊 Analytics & Reports
 
-GET /api/lms/admin/applications — all applications (optional)
+🧪 Unit & Integration Tests
 
-GET /api/lms/admin/dashboard — stats
+🐳 Docker Compose for Full Stack
 
-Repayment
+🤝 Contributing
 
-POST /api/lms/loan/repay — body: { accountNumber, amount }
-
-TIP: Use the browser Network tab or curl to confirm exact shapes during dev.
-
-Frontend integration details
-
-AuthContext provides login, logout, updatePassword, user, loading.
-
-Axios clients
-
-publicApi → /login, /register
-
-api → adds Authorization: Bearer <token> (interceptor)
-
-Services
-
-services/auth.ts → login, register, loadMe, logout, updatePassword
-
-api/adminLoanApi.ts → fetchPendingForAdmin, approveApplication, rejectApplication
-
-api/loanApi.ts → maps backend loan/app data → strict UI types
-
-UI pages
-
-pages/admin/AdminApplications.tsx — pending review table with Approve/Reject
-
-pages/admin/AdminDashboard.tsx — stats + applications (you can comment/uncomment Applied column)
-
-pages/profile/Profile.tsx — personal info + Change Password modal
-
-Database schema (high level)
-
-users (id, username, email, password_hash, role, created_at, last_login, …)
-
-bank_account (id, user_id, account_number, status [WAITING_VERIFICATION|VERIFIED], retry_count)
-
-loan_application (id, user_id, account_id, loan_amount, purpose, term_months, status [PENDING|APPROVED|REJECTED], emi_per_month, total_emi)
-
-loan (id, user_id, account_id, total_loan, remaining_amount, term_months, loan_date, due_date, emi_amount)
-
-loan_emi_schedule (id, loan_id, installment_number, emi_amount, principal_component, interest_component, remaining_principal, due_date, status)
-
-repayment (id, loan_id, amount, repayment_date, status [WAITING|PAID|FAILED])
-
-credit_score (id, user_id, score)
-
-Use Flyway/Liquibase for reproducible migrations in production.
-
-Common pitfalls & fixes
-
-400 on /updatePassword
-
-Make sure services/auth.ts uses the protected api client (baseURL /api/lms) — not publicApi.
-
-If old password is wrong, backend intentionally returns 400 ("❌ Incorrect old password"). Surface the error message in UI.
-
-CORS issues
-Add a simple CORS config in Spring (dev only):
-
-@Configuration
-public class CorsConfig {
-  @Bean
-  public WebMvcConfigurer corsConfigurer() {
-    return new WebMvcConfigurer() {
-      @Override public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-          .allowedOrigins("http://localhost:5173")
-          .allowedMethods("GET","POST","PUT","PATCH","DELETE","OPTIONS")
-          .allowCredentials(true);
-      }
-    };
-  }
-}
-
-
-Dates showing 1969 or —
-
-That happens when a date field is missing or parsed as epoch 0.
-
-Either send a real appliedDate from backend, or comment out the column (we included a commented version you can re-enable later).
-
-Numbers arrive as strings
-
-The frontend mappers (toNum) already handle string | number | null.
-
-Roadmap
-
-✅ JWT auth, bank verification, loan apply/approve/reject, EMI schedule, repay
-
-🔒 Role-based authorization polish (method security)
-
-📨 Real email notifications
-
-📈 Reports/analytics (per user/per product)
-
-💳 Multiple bank accounts per user
-
-🧪 Full test coverage (unit/integration/e2e)
-
-🐳 Docker Compose for full stack
-
-Contributing
-
-Fork & clone
+Fork the repo
 
 Create a feature branch
 
-Commit with meaningful messages
+Commit your changes
 
-Open a PR with context, screenshots for UI changes, and test notes
+Open a Pull Request
 
-License
+📄 License
 
-MIT — feel free to use and modify. Attribution appreciated!
-
-Quick test with cURL
-# Register
-curl -X POST http://localhost:8081/register \
-  -H 'Content-Type: application/json' \
-  -d '{"fullName":"Alice","username":"alice","email":"alice@example.com","password":"Secret123!"}'
-
-# Login (note: token may be in header or body depending on your backend)
-curl -i -X POST http://localhost:8081/login \
-  -H 'Content-Type: application/json' \
-  -d '{"username":"alice","password":"Secret123!"}'
-
-# Use token
-TOKEN="YOUR_JWT_HERE"
-curl -H "Authorization: Bearer $TOKEN" http://localhost:8081/api/lms/profile
+This project is licensed under the MIT License — you are free to use, modify, and distribute it.
