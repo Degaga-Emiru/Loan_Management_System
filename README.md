@@ -126,6 +126,7 @@ loan-management-system/
         ├── pages/           # Pages (Dashboard, Profile, Loan Applications, etc.)
         └── services/        # Auth & Loan services
 
+
 📌 Status
 
 🚧 This project is under active development.
