@@ -19,95 +19,62 @@ This repository is structured for easy local setup, extension, and deployment.
 ## 🚀 Features
 ### For Customers
 
-Register & login (JWT-based authentication)
+- Register & login (JWT-based authentication)
 
-Bank account verification via micro-deposit (BMS)
+- Bank account verification via micro-deposit (BMS)
 
-Apply for loans (auto-calculated EMI)
+- Apply for loans (auto-calculated EMI)
 
-View active loans, applications & EMI schedules
+- View active loans, applications & EMI schedules
 
-Repay loan amounts online
+- Repay loan amounts online
 
-Update profile & change password securely
+- Update profile & change password securely
 
 ### For Admins
 
-Dashboard with loan statistics (pending, approved, disbursed, rejected)
+- Dashboard with loan statistics (pending, approved, disbursed, rejected)
 
-Review loan applications with BMS account snapshots
+- Review loan applications with BMS account snapshots
 
-Approve & disburse loans (auto-generates EMI schedule)
+- Approve & disburse loans (auto-generates EMI schedule)
 
-Reject loan applications
+- Reject loan applications
 
-View all applications & repayment history
+- View all applications & repayment history
+- 
+---
 
-## ⚙️ Architecture
-flowchart LR
-  A[Browser (React + Vite)] -->|Axios| B[Spring Boot API (/api/lms)]
-  B --> C[AuthService / JWT]
-  B --> D[LoanService]
-  B --> E[CreditScoreService]
-  B --> F[MailService]
-  B --> G[BmsClient (Bank Mgmt System)]
-  D --> H[(PostgreSQL)]
-  C --> H
-  E --> H
-  D -->|Disburse / Repay / Verify| G
+## ⚙️🛠️Tech Stack
 
+- 🎨🖥️ **Frontend**: React + Vite + TypeScript + Axios
 
-## Tech Stack
+- ⚙️🛠️ **Backend**: Spring Boot + Spring Security + JWT
 
-Frontend: React + Vite + TypeScript + Axios
+ - 🗄️💾 **Database**: PostgreSQL
 
-Backend: Spring Boot + Spring Security + JWT
+-  🌐 **Integration**: BMS client for bank operations
 
-Database: PostgreSQL
+---
 
-Integration: BMS client for bank operations
+  ## Installations(Running the Project Locally)
+### 🛠️ Prerequisites
 
-Deployment: Docker-ready setup
+- Java 17+
 
-## 📂 folder Structure
-loan-management-system/
-├── backend/
-│   ├── src/main/java/com/lms/
-│   │   ├── controller/       # REST controllers
-│   │   ├── service/          # Business logic (Loan, CreditScore, Mail, etc.)
-│   │   ├── model/            # Entities (User, Loan, EMI, Repayment, etc.)
-│   │   ├── dto/              # DTOs for requests & responses
-│   │   ├── repository/       # Spring Data repositories
-│   │   ├── security/         # JWT auth & filters
-│   │   └── client/           # BMS API client
-│   └── src/main/resources/
-│       └── application.properties
-└── frontend/
-    └── src/
-        ├── api/             # Axios API clients
-        ├── components/      # UI components
-        ├── contexts/        # Auth & session handling
-        ├── lib/             # Axios configs (api.ts, publicApi.ts)
-        ├── pages/           # UI pages (Dashboard, Loans, Profile, etc.)
-        └── services/        # Auth & Loan services
+- Maven or Gradle
 
-## 🛠️ Prerequisites
+- Node.js 18+ & npm / yarn
 
-Java 17+
+- PostgreSQL 14+
 
-Maven or Gradle
-
-Node.js 18+ & npm / yarn
-
-PostgreSQL 14+
-
-(Optional) Docker for DB setup
+- (Optional) Docker for DB setup
 
 🔧 Backend Setup (Spring Boot)
-# Create PostgreSQL DB
+### Create PostgreSQL DB
 createdb lms
 
-# Or using Docker
+### Or using Docker
 docker run --name lms-postgres \
 -e POSTGRES_PASSWORD=postgres \
 -e POSTGRES_DB=lms \
@@ -115,7 +82,7 @@ docker run --name lms-postgres \
 -d postgres:14
 
 
-Edit backend/src/main/resources/application.properties:
+- Edit backend/src/main/resources/application.properties:
 
 server.port=8081
 spring.datasource.url=jdbc:postgresql://localhost:5432/lms
@@ -129,42 +96,41 @@ app.jwt.secret=your-secret-key
 app.jwt.expiration=86400000
 
 
-Run the backend:
+## Run the backend:
 
 cd backend
 mvn spring-boot:run
 
-💻 Frontend Setup (React + Vite)
+## 💻 Frontend Setup (React + Vite)
 cd frontend
 npm install
 npm run dev
-
 
 Frontend: http://localhost:5173
 
 Backend: http://localhost:8081
 
-🌐 Environment Variables
+## 🌐 Environment Variables
 
 Create .env in frontend/:
 
 VITE_API_BASE=http://localhost:8081/api/lms
 VITE_PUBLIC_BASE=http://localhost:8081
 
-🔄 Key Flows
-1️⃣ Bank Verification
+## 🔄 Key Flows
+- 1️⃣ Bank Verification
 
 → LMS → BMS → Micro-deposit → Verification → Credit Score Update
 
-2️⃣ Loan Application
+- 2️⃣ Loan Application
 
 → Check verified bank → Calculate EMI → Save as PENDING → Update credit score
 
-3️⃣ Admin Approval
+- 3️⃣ Admin Approval
 
 → Fetch BMS snapshot → Approve → LMS disburses loan → EMI schedule generated
 
-4️⃣ Loan Repayment
+- 4️⃣ Loan Repayment
 
 → Repayment via BMS → LMS updates EMI & credit score
 
@@ -197,13 +163,13 @@ POST /api/lms/loan/repay
 
 A demo banking microservice built using Spring Boot that integrates with LMS via JWT-secured APIs.
 
-Features:
+### Features:
 
-REST APIs for micro-deposits, loan disbursements, repayments
+- REST APIs for micro-deposits, loan disbursements, repayments
 
-JWT authentication & secure ngrok tunneling
+- JWT authentication & secure ngrok tunneling
 
-Handles account verification & transaction tracking
+- Handles account verification & transaction tracking
 
 ## BMS Endpoints
 
@@ -215,27 +181,27 @@ API	Method	Description
 /api/bank/repay	POST	Repay loan amount
 ### 🗂️ Database Schema (High Level)
 
-users → Stores customer & admin profiles
+- users → Stores customer & admin profiles
 
-bank_account → Bank verification status
+- bank_account → Bank verification status
 
-loan_application → Pending loan requests
+- loan_application → Pending loan requests
 
-loan → Approved loans & EMI details
+- loan → Approved loans & EMI details
 
-loan_emi_schedule → EMI tracking per loan
+- loan_emi_schedule → EMI tracking per loan
 
-repayment → Loan repayments
+- repayment → Loan repayments
 
-credit_score → Customer credit scoring
+- credit_score → Customer credit scoring
 
-⚠️ Common Pitfalls & Fixes
+### ⚠️ Common Pitfalls & Fixes
 
-CORS Issues → Add Spring CorsConfig
+- CORS Issues → Add Spring CorsConfig
 
-400 on Password Update → Use protected API client
+- 400 on Password Update → Use protected API client
 
-Wrong Dates → Check appliedDate in backend response
+- Wrong Dates → Check appliedDate in backend response
 
 ## 🛤 Roadmap
 
@@ -245,6 +211,28 @@ Wrong Dates → Check appliedDate in backend response
 📨 Email Notifications
 📈 Reports & Analytics
 🐳 Docker Compose Setup
+```pleintext
+## 📂 folder Structure
+loan-management-system/
+├── backend/
+│   ├── src/main/java/com/lms/
+│   │   ├── controller/       # REST controllers
+│   │   ├── service/          # Business logic (Loan, CreditScore, Mail, etc.)
+│   │   ├── model/            # Entities (User, Loan, EMI, Repayment, etc.)
+│   │   ├── dto/              # DTOs for requests & responses
+│   │   ├── repository/       # Spring Data repositories
+│   │   ├── security/         # JWT auth & filters
+│   │   └── client/           # BMS API client
+│   └── src/main/resources/
+│       └── application.properties
+└── frontend/
+    └── src/
+        ├── api/             # Axios API clients
+        ├── components/      # UI components
+        ├── contexts/        # Auth & session handling
+        ├── lib/             # Axios configs (api.ts, publicApi.ts)
+        ├── pages/           # UI pages (Dashboard, Loans, Profile, etc.)
+        └── services/        # Auth & Loan services
 
 ### 🤝 Contributing
 
@@ -256,6 +244,6 @@ Commit changes
 
 Open a PR with screenshots & test notes
 
-## 📄 License
+###  📄 License
 
 MIT License — Free to use, modify & distribute.
