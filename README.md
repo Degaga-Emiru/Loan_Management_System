@@ -88,7 +88,9 @@ Integration: BMS client for bank operations
 
 Deployment: Docker-ready setup
 
-📂 Monorepo Structure
+📂 folder Structure
+```plaintext
+
 loan-management-system/
 ├── backend/
 │   ├── src/main/java/com/lms/
