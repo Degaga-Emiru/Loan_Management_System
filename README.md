@@ -5,40 +5,19 @@ It integrates with a lightweight Bank Management System (BMS) for account verifi
 
 This repository is structured for easy local setup, extension, and deployment.
 
-📑 Table of Contents
+## 📌 Table of Contents
+- [Overview](#overview)
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Folder Structure](#folder-structure)
+- [Installation](#installation)
+- [Usage](#usage)
+- [License](#license)
 
-🚀 Features
-
-⚙️ Architecture
-
-📂 Monorepo Structure
-
-🛠️ Prerequisites
-
-🔧 Backend Setup
-
-💻 Frontend Setup
-
-🌐 Environment Variables
-
-🔄 Key Flows
-
-📡 API Reference
-
-🪙 Bank Management System (BMS)
-
-🗂️ Database Schema
-
-⚠️ Common Pitfalls & Fixes
-
-🛤 Roadmap
-
-🤝 Contributing
-
-📄 License
+---
 
 ## 🚀 Features
-For Customers
+### For Customers
 
 Register & login (JWT-based authentication)
 
@@ -52,7 +31,7 @@ Repay loan amounts online
 
 Update profile & change password securely
 
-For Admins
+### For Admins
 
 Dashboard with loan statistics (pending, approved, disbursed, rejected)
 
@@ -78,7 +57,7 @@ flowchart LR
   D -->|Disburse / Repay / Verify| G
 
 
-Tech Stack
+## Tech Stack
 
 Frontend: React + Vite + TypeScript + Axios
 
@@ -112,7 +91,7 @@ loan-management-system/
         ├── pages/           # UI pages (Dashboard, Loans, Profile, etc.)
         └── services/        # Auth & Loan services
 
-##🛠️ Prerequisites
+## 🛠️ Prerequisites
 
 Java 17+
 
@@ -189,32 +168,32 @@ VITE_PUBLIC_BASE=http://localhost:8081
 
 → Repayment via BMS → LMS updates EMI & credit score
 
-📡 API Reference
+## 📡 API Reference
 Authentication
 POST /login
 POST /register
 GET /api/lms/profile
 PUT /api/lms/updatePassword
 
-Bank APIs
+### Bank APIs
 POST /api/lms/bank/verify
 POST /api/lms/bank/confirm
 
-Loan APIs
+### Loan APIs
 POST /api/lms/loan/apply
 GET /api/lms/applications/{accountNumber}
 GET /api/lms/active/{accountNumber}
 
-Admin APIs
+### Admin APIs
 GET /api/lms/loan/pending
 POST /api/lms/loan/approve
 POST /api/lms/loan/reject
 GET /api/lms/admin/dashboard
 
-Repayment
+### Repayment
 POST /api/lms/loan/repay
 
-🪙 Bank Management System (BMS)
+## 🪙 Bank Management System (BMS)
 
 A demo banking microservice built using Spring Boot that integrates with LMS via JWT-secured APIs.
 
@@ -226,7 +205,7 @@ JWT authentication & secure ngrok tunneling
 
 Handles account verification & transaction tracking
 
-BMS Endpoints
+## BMS Endpoints
 
 API	Method	Description
 /api/bank/hello	GET	Health check
@@ -234,7 +213,7 @@ API	Method	Description
 /api/bank/verify-deposit	POST	Confirm micro-deposit
 /api/bank/loan	POST	Disburse loan
 /api/bank/repay	POST	Repay loan amount
-🗂️ Database Schema (High Level)
+### 🗂️ Database Schema (High Level)
 
 users → Stores customer & admin profiles
 
@@ -258,7 +237,7 @@ CORS Issues → Add Spring CorsConfig
 
 Wrong Dates → Check appliedDate in backend response
 
-🛤 Roadmap
+## 🛤 Roadmap
 
 ✅ JWT Auth & BMS Integration
 ✅ Loan Application, Approval, EMI & Repayment
@@ -267,7 +246,7 @@ Wrong Dates → Check appliedDate in backend response
 📈 Reports & Analytics
 🐳 Docker Compose Setup
 
-🤝 Contributing
+### 🤝 Contributing
 
 Fork the repo
 
@@ -277,6 +256,6 @@ Commit changes
 
 Open a PR with screenshots & test notes
 
-📄 License
+## 📄 License
 
 MIT License — Free to use, modify & distribute.
