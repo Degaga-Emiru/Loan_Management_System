@@ -1,6 +1,6 @@
 # 🏦 Loan Management System (LMS) — React + Spring Boot (with BMS Integration)
 
-A full-stack Loan Management System built with React (TypeScript) on the frontend and Spring Boot (Java) on the backend.
+A full-stack Loan Management System built with **React (TypeScript)** on the frontend and **Spring Boot (Java)** on the backend.
 It integrates with a lightweight Bank Management System (BMS) for account verification, loan disbursement, and repayments.
 
 This repository is structured for easy local setup, extension, and deployment.
