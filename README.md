@@ -84,12 +84,12 @@ docker run --name lms-postgres \
 
 - Edit backend/src/main/resources/application.properties:
 
-server.port=8081
-spring.datasource.url=jdbc:postgresql://localhost:5432/lms
-spring.datasource.username=postgres
-spring.datasource.password=postgres
-spring.jpa.hibernate.ddl-auto=update
-spring.jpa.show-sql=true
+- server.port=8081
+- spring.datasource.url=jdbc:postgresql://localhost:5432/lms
+- spring.datasource.username=postgres
+- spring.datasource.password=postgres
+- spring.jpa.hibernate.ddl-auto=update
+- spring.jpa.show-sql=true
 
 # JWT Configuration
 app.jwt.secret=your-secret-key
@@ -102,20 +102,20 @@ cd backend
 mvn spring-boot:run
 
 ## 💻 Frontend Setup (React + Vite)
-cd frontend
-npm install
-npm run dev
+- cd frontend
+- npm install
+- npm run dev
 
-Frontend: http://localhost:5173
+- Frontend: http://localhost:5173
 
-Backend: http://localhost:8081
+- Backend: http://localhost:8081
 
 ## 🌐 Environment Variables
 
 Create .env in frontend/:
 
-VITE_API_BASE=http://localhost:8081/api/lms
-VITE_PUBLIC_BASE=http://localhost:8081
+- VITE_API_BASE=http://localhost:8081/api/lms
+- VITE_PUBLIC_BASE=http://localhost:8081
 
 ## 🔄 Key Flows
 - 1️⃣ Bank Verification
@@ -136,32 +136,32 @@ VITE_PUBLIC_BASE=http://localhost:8081
 
 ## 📡 API Reference
 Authentication
-POST /login
-POST /register
-GET /api/lms/profile
-PUT /api/lms/updatePassword
+- POST /login
+- POST /register
+- GET /api/lms/profile
+- PUT /api/lms/updatePassword
 
 ### Bank APIs
-POST /api/lms/bank/verify
-POST /api/lms/bank/confirm
+- POST /api/lms/bank/verify
+- POST /api/lms/bank/confirm
 
 ### Loan APIs
-POST /api/lms/loan/apply
-GET /api/lms/applications/{accountNumber}
-GET /api/lms/active/{accountNumber}
+- POST /api/lms/loan/apply
+- GET /api/lms/applications/{accountNumber}
+- GET /api/lms/active/{accountNumber}
 
 ### Admin APIs
-GET /api/lms/loan/pending
-POST /api/lms/loan/approve
-POST /api/lms/loan/reject
-GET /api/lms/admin/dashboard
+- GET /api/lms/loan/pending
+- POST /api/lms/loan/approve
+- POST /api/lms/loan/reject
+- GET /api/lms/admin/dashboard
 
 ### Repayment
-POST /api/lms/loan/repay
+- POST /api/lms/loan/repay
 
 ## 🪙 Bank Management System (BMS)
 
-A demo banking microservice built using Spring Boot that integrates with LMS via JWT-secured APIs.
+- A demo banking microservice built using Spring Boot that integrates with LMS via JWT-secured APIs.
 
 ### Features:
 
@@ -172,13 +172,11 @@ A demo banking microservice built using Spring Boot that integrates with LMS via
 - Handles account verification & transaction tracking
 
 ## BMS Endpoints
-
-API	Method	Description
-/api/bank/hello	GET	Health check
-/api/bank/verify	POST	Send micro-deposit
-/api/bank/verify-deposit	POST	Confirm micro-deposit
-/api/bank/loan	POST	Disburse loan
-/api/bank/repay	POST	Repay loan amount
+- GET /api/bank/hello    	GET	Health check
+- GET /api/bank/verify		Send micro-deposit
+- POST /api/bank/verify-deposit	Confirm micro-deposit
+- POST /api/bank/loan	   	Disburse loan
+- POST /api/bank/repay	  	Repay loan amount
 ### 🗂️ Database Schema (High Level)
 
 - users → Stores customer & admin profiles
@@ -211,8 +209,18 @@ API	Method	Description
 📨 Email Notifications
 📈 Reports & Analytics
 🐳 Docker Compose Setup
+
+### 🤝 Contributing
+
+- Fork the repo
+
+- Create a feature branch
+
+- Commit changes
+
+- Open a PR with screenshots & test notes
 ```pleintext
-## 📂 folder Structure
+ 📂 folder Structure
 loan-management-system/
 ├── backend/
 │   ├── src/main/java/com/lms/
@@ -234,16 +242,6 @@ loan-management-system/
         ├── pages/           # UI pages (Dashboard, Loans, Profile, etc.)
         └── services/        # Auth & Loan services
 
-### 🤝 Contributing
-
-Fork the repo
-
-Create a feature branch
-
-Commit changes
-
-Open a PR with screenshots & test notes
-
-###  📄 License
+  📄 License
 
 MIT License — Free to use, modify & distribute.
