@@ -1,4 +1,4 @@
-🏦 Loan Management System (LMS) — React + Spring Boot (with BMS Integration)
+# 🏦 Loan Management System (LMS) — React + Spring Boot (with BMS Integration)
 
 A full-stack Loan Management System built with React (TypeScript) on the frontend and Spring Boot (Java) on the backend.
 It integrates with a lightweight Bank Management System (BMS) for account verification, loan disbursement, and repayments.
@@ -15,9 +15,9 @@ This repository is structured for easy local setup, extension, and deployment.
 
 🛠️ Prerequisites
 
-🔧 Backend Setup (Spring Boot)
+🔧 Backend Setup
 
-💻 Frontend Setup (React + Vite)
+💻 Frontend Setup
 
 🌐 Environment Variables
 
@@ -37,7 +37,7 @@ This repository is structured for easy local setup, extension, and deployment.
 
 📄 License
 
-🚀 Features
+##🚀 Features
 For Customers
 
 Register & login (JWT-based authentication)
@@ -46,7 +46,7 @@ Bank account verification via micro-deposit (BMS)
 
 Apply for loans (auto-calculated EMI)
 
-View active loans, applications, and EMI schedules
+View active loans, applications & EMI schedules
 
 Repay loan amounts online
 
@@ -54,17 +54,17 @@ Update profile & change password securely
 
 For Admins
 
-Dashboard with loan statistics: pending, approved, disbursed, rejected
+Dashboard with loan statistics (pending, approved, disbursed, rejected)
 
-Review pending loan applications with BMS account snapshots
+Review loan applications with BMS account snapshots
 
 Approve & disburse loans (auto-generates EMI schedule)
 
-Reject applications
+Reject loan applications
 
-View all applications and repayment history
+View all applications & repayment history
 
-⚙️ Architecture
+##⚙️ Architecture
 flowchart LR
   A[Browser (React + Vite)] -->|Axios| B[Spring Boot API (/api/lms)]
   B --> C[AuthService / JWT]
@@ -78,6 +78,8 @@ flowchart LR
   D -->|Disburse / Repay / Verify| G
 
 
+Tech Stack
+
 Frontend: React + Vite + TypeScript + Axios
 
 Backend: Spring Boot + Spring Security + JWT
@@ -88,9 +90,7 @@ Integration: BMS client for bank operations
 
 Deployment: Docker-ready setup
 
-📂 folder Structure
-```plaintext
-
+📂 Monorepo Structure
 loan-management-system/
 ├── backend/
 │   ├── src/main/java/com/lms/
@@ -112,25 +112,28 @@ loan-management-system/
         ├── pages/           # UI pages (Dashboard, Loans, Profile, etc.)
         └── services/        # Auth & Loan services
 
-🛠️ Prerequisites
+##🛠️ Prerequisites
 
 Java 17+
 
-Maven (or Gradle)
+Maven or Gradle
 
 Node.js 18+ & npm / yarn
 
 PostgreSQL 14+
 
-Optional: Docker for DB setup
+(Optional) Docker for DB setup
 
 🔧 Backend Setup (Spring Boot)
-# Create Postgres DB
+# Create PostgreSQL DB
 createdb lms
 
 # Or using Docker
-docker run --name lms-postgres -e POSTGRES_PASSWORD=postgres \
--e POSTGRES_DB=lms -p 5432:5432 -d postgres:14
+docker run --name lms-postgres \
+-e POSTGRES_PASSWORD=postgres \
+-e POSTGRES_DB=lms \
+-p 5432:5432 \
+-d postgres:14
 
 
 Edit backend/src/main/resources/application.properties:
@@ -147,7 +150,7 @@ app.jwt.secret=your-secret-key
 app.jwt.expiration=86400000
 
 
-Start the backend:
+Run the backend:
 
 cd backend
 mvn spring-boot:run
@@ -158,13 +161,13 @@ npm install
 npm run dev
 
 
-Frontend runs on: http://localhost:5173
+Frontend: http://localhost:5173
 
-Backend runs on: http://localhost:8081
+Backend: http://localhost:8081
 
 🌐 Environment Variables
 
-Create a .env in frontend/:
+Create .env in frontend/:
 
 VITE_API_BASE=http://localhost:8081/api/lms
 VITE_PUBLIC_BASE=http://localhost:8081
@@ -176,7 +179,7 @@ VITE_PUBLIC_BASE=http://localhost:8081
 
 2️⃣ Loan Application
 
-→ Check verified bank → Calculate EMI → Save as PENDING → Adjust credit score
+→ Check verified bank → Calculate EMI → Save as PENDING → Update credit score
 
 3️⃣ Admin Approval
 
@@ -188,61 +191,48 @@ VITE_PUBLIC_BASE=http://localhost:8081
 
 📡 API Reference
 Authentication
-
 POST /login
-
 POST /register
-
 GET /api/lms/profile
-
 PUT /api/lms/updatePassword
 
 Bank APIs
-
 POST /api/lms/bank/verify
-
 POST /api/lms/bank/confirm
 
 Loan APIs
-
 POST /api/lms/loan/apply
-
 GET /api/lms/applications/{accountNumber}
-
 GET /api/lms/active/{accountNumber}
 
 Admin APIs
-
 GET /api/lms/loan/pending
-
 POST /api/lms/loan/approve
-
 POST /api/lms/loan/reject
-
 GET /api/lms/admin/dashboard
 
 Repayment
-
 POST /api/lms/loan/repay
 
-🏦 Bank Management System (BMS)
+🪙 Bank Management System (BMS)
 
 A demo banking microservice built using Spring Boot that integrates with LMS via JWT-secured APIs.
 
-Features
+Features:
 
-RESTful APIs for micro-deposits, loan disbursements, and repayments
+REST APIs for micro-deposits, loan disbursements, repayments
 
-JWT authentication & ngrok tunneling for secure communication
+JWT authentication & secure ngrok tunneling
 
-Handles account verification and transaction tracking
+Handles account verification & transaction tracking
 
 BMS Endpoints
+
 API	Method	Description
 /api/bank/hello	GET	Health check
 /api/bank/verify	POST	Send micro-deposit
 /api/bank/verify-deposit	POST	Confirm micro-deposit
-/api/bank/loan	POST	Disburse a loan
+/api/bank/loan	POST	Disburse loan
 /api/bank/repay	POST	Repay loan amount
 🗂️ Database Schema (High Level)
 
@@ -289,4 +279,4 @@ Open a PR with screenshots & test notes
 
 📄 License
 
-MIT License — free to use, modify & distribute.
+MIT License — Free to use, modify & distribute.
