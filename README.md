@@ -37,7 +37,7 @@ This repository is structured for easy local setup, extension, and deployment.
 
 📄 License
 
-##🚀 Features
+## 🚀 Features
 For Customers
 
 Register & login (JWT-based authentication)
@@ -64,7 +64,7 @@ Reject loan applications
 
 View all applications & repayment history
 
-##⚙️ Architecture
+## ⚙️ Architecture
 flowchart LR
   A[Browser (React + Vite)] -->|Axios| B[Spring Boot API (/api/lms)]
   B --> C[AuthService / JWT]
@@ -90,7 +90,7 @@ Integration: BMS client for bank operations
 
 Deployment: Docker-ready setup
 
-📂 Monorepo Structure
+## 📂 folder Structure
 loan-management-system/
 ├── backend/
 │   ├── src/main/java/com/lms/
