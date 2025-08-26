@@ -1,70 +1,135 @@
-🏦 Loan Management System (LMS)
+🏦 Loan Management System (LMS) — React + Spring Boot (with BMS Integration)
 
-This repository contains a Loan Management System Web Application built using React (TypeScript) for the frontend and Spring Boot (Java) for the backend, with PostgreSQL as the database.
-It integrates with a Bank Management System (BMS) for account verification, loan disbursement, and repayments.
+A full-stack Loan Management System built with React (TypeScript) on the frontend and Spring Boot (Java) on the backend.
+It integrates with a lightweight Bank Management System (BMS) for account verification, loan disbursement, and repayments.
 
-The system supports both customers and admins, providing a seamless way to manage loan applications, approvals, repayments, and account verification.
+This repository is structured for easy local setup, extension, and deployment.
+
+📑 Table of Contents
+
+🚀 Features
+
+⚙️ Architecture
+
+📂 Monorepo Structure
+
+🛠️ Prerequisites
+
+🔧 Backend Setup (Spring Boot)
+
+💻 Frontend Setup (React + Vite)
+
+🌐 Environment Variables
+
+🔄 Key Flows
+
+📡 API Reference
+
+🪙 Bank Management System (BMS)
+
+🗂️ Database Schema
+
+⚠️ Common Pitfalls & Fixes
+
+🛤 Roadmap
+
+🤝 Contributing
+
+📄 License
 
 🚀 Features
 For Customers
 
-Register and login using JWT-based authentication
+Register & login (JWT-based authentication)
 
-Verify bank accounts via micro-deposit (BMS integration)
+Bank account verification via micro-deposit (BMS)
 
-Apply for loans with auto-calculated EMI
+Apply for loans (auto-calculated EMI)
 
-View active loans, pending applications, and EMI schedules
+View active loans, applications, and EMI schedules
 
-Make loan repayments online
+Repay loan amounts online
 
-Update profile and change password securely
+Update profile & change password securely
 
 For Admins
 
-Dashboard with loan statistics (pending, approved, disbursed, rejected)
+Dashboard with loan statistics: pending, approved, disbursed, rejected
 
-Review loan applications with BMS account snapshots
+Review pending loan applications with BMS account snapshots
 
-Approve or reject loan applications
+Approve & disburse loans (auto-generates EMI schedule)
 
-Disburse loans and auto-generate EMI schedules
+Reject applications
 
-View all loan applications and repayment history
+View all applications and repayment history
 
-🛠️ Tech Stack
+⚙️ Architecture
+flowchart LR
+  A[Browser (React + Vite)] -->|Axios| B[Spring Boot API (/api/lms)]
+  B --> C[AuthService / JWT]
+  B --> D[LoanService]
+  B --> E[CreditScoreService]
+  B --> F[MailService]
+  B --> G[BmsClient (Bank Mgmt System)]
+  D --> H[(PostgreSQL)]
+  C --> H
+  E --> H
+  D -->|Disburse / Repay / Verify| G
 
-Frontend: React (TypeScript), Vite, Tailwind CSS, Axios
 
-Backend: Spring Boot 3, Java 17, Spring Security, JWT
+Frontend: React + Vite + TypeScript + Axios
+
+Backend: Spring Boot + Spring Security + JWT
 
 Database: PostgreSQL
 
-API Integration: BMS Client for verification, disbursement & repayments
+Integration: BMS client for bank operations
 
-Build Tools: Maven
+Deployment: Docker-ready setup
 
-Deployment: Docker (optional)
+📂 Monorepo Structure
+loan-management-system/
+├── backend/
+│   ├── src/main/java/com/lms/
+│   │   ├── controller/       # REST controllers
+│   │   ├── service/          # Business logic (Loan, CreditScore, Mail, etc.)
+│   │   ├── model/            # Entities (User, Loan, EMI, Repayment, etc.)
+│   │   ├── dto/              # DTOs for requests & responses
+│   │   ├── repository/       # Spring Data repositories
+│   │   ├── security/         # JWT auth & filters
+│   │   └── client/           # BMS API client
+│   └── src/main/resources/
+│       └── application.properties
+└── frontend/
+    └── src/
+        ├── api/             # Axios API clients
+        ├── components/      # UI components
+        ├── contexts/        # Auth & session handling
+        ├── lib/             # Axios configs (api.ts, publicApi.ts)
+        ├── pages/           # UI pages (Dashboard, Loans, Profile, etc.)
+        └── services/        # Auth & Loan services
 
-💻 Running the Project Locally
+🛠️ Prerequisites
 
-Follow these steps to set up and run the Loan Management System on your local machine:
+Java 17+
 
-1. Clone the Project
-git clone https://github.com/your-username/loan-management-system.git
-cd loan-management-system
+Maven (or Gradle)
 
-2. Backend Setup (Spring Boot)
-a) Create PostgreSQL Database
+Node.js 18+ & npm / yarn
+
+PostgreSQL 14+
+
+Optional: Docker for DB setup
+
+🔧 Backend Setup (Spring Boot)
+# Create Postgres DB
 createdb lms
 
-
-Or using Docker:
-
+# Or using Docker
 docker run --name lms-postgres -e POSTGRES_PASSWORD=postgres \
 -e POSTGRES_DB=lms -p 5432:5432 -d postgres:14
 
-b) Configure Application Properties
 
 Edit backend/src/main/resources/application.properties:
 
@@ -79,63 +144,147 @@ spring.jpa.show-sql=true
 app.jwt.secret=your-secret-key
 app.jwt.expiration=86400000
 
-c) Start the Backend
+
+Start the backend:
+
 cd backend
 mvn spring-boot:run
 
-
-Your backend will run on:
-http://localhost:8081
-
-3. Frontend Setup (React + Vite)
-a) Configure Environment Variables
-
-Create a .env file inside frontend/:
-
-VITE_API_BASE=http://localhost:8081/api/lms
-VITE_PUBLIC_BASE=http://localhost:8081
-
-b) Install & Start the Frontend
+💻 Frontend Setup (React + Vite)
 cd frontend
 npm install
 npm run dev
 
 
-Your frontend will run on:
-http://localhost:5173
+Frontend runs on: http://localhost:5173
 
-📁 Project Structure
-loan-management-system/
-├── backend/
-│   ├── src/main/java/com/lms/
-│   │   ├── controller/       # REST API controllers
-│   │   ├── service/          # Business logic (LoanService, CreditScoreService, etc.)
-│   │   ├── model/            # JPA entities
-│   │   ├── dto/              # Request & response DTOs
-│   │   ├── repository/       # Spring Data JPA repositories
-│   │   ├── security/         # JWT authentication & filters
-│   │   └── client/           # BMS integration client
-│   └── src/main/resources/
-│       └── application.properties
-└── frontend/
-    └── src/
-        ├── api/             # Axios API clients
-        ├── components/      # Reusable UI components
-        ├── contexts/        # Auth context (JWT handling)
-        ├── lib/             # API configuration files
-        ├── pages/           # Pages (Dashboard, Profile, Loan Applications, etc.)
-        └── services/        # Auth & Loan services
+Backend runs on: http://localhost:8081
 
+🌐 Environment Variables
 
-📌 Status
+Create a .env in frontend/:
 
-🚧 This project is under active development.
-New features and improvements are continuously being added. Contributions are always welcome!
+VITE_API_BASE=http://localhost:8081/api/lms
+VITE_PUBLIC_BASE=http://localhost:8081
 
-📬 Contact
+🔄 Key Flows
+1️⃣ Bank Verification
 
-For questions, issues, or contributions, feel free to:
+→ LMS → BMS → Micro-deposit → Verification → Credit Score Update
 
-Open an issue
+2️⃣ Loan Application
 
-Submit a pull request
+→ Check verified bank → Calculate EMI → Save as PENDING → Adjust credit score
+
+3️⃣ Admin Approval
+
+→ Fetch BMS snapshot → Approve → LMS disburses loan → EMI schedule generated
+
+4️⃣ Loan Repayment
+
+→ Repayment via BMS → LMS updates EMI & credit score
+
+📡 API Reference
+Authentication
+
+POST /login
+
+POST /register
+
+GET /api/lms/profile
+
+PUT /api/lms/updatePassword
+
+Bank APIs
+
+POST /api/lms/bank/verify
+
+POST /api/lms/bank/confirm
+
+Loan APIs
+
+POST /api/lms/loan/apply
+
+GET /api/lms/applications/{accountNumber}
+
+GET /api/lms/active/{accountNumber}
+
+Admin APIs
+
+GET /api/lms/loan/pending
+
+POST /api/lms/loan/approve
+
+POST /api/lms/loan/reject
+
+GET /api/lms/admin/dashboard
+
+Repayment
+
+POST /api/lms/loan/repay
+
+🏦 Bank Management System (BMS)
+
+A demo banking microservice built using Spring Boot that integrates with LMS via JWT-secured APIs.
+
+Features
+
+RESTful APIs for micro-deposits, loan disbursements, and repayments
+
+JWT authentication & ngrok tunneling for secure communication
+
+Handles account verification and transaction tracking
+
+BMS Endpoints
+API	Method	Description
+/api/bank/hello	GET	Health check
+/api/bank/verify	POST	Send micro-deposit
+/api/bank/verify-deposit	POST	Confirm micro-deposit
+/api/bank/loan	POST	Disburse a loan
+/api/bank/repay	POST	Repay loan amount
+🗂️ Database Schema (High Level)
+
+users → Stores customer & admin profiles
+
+bank_account → Bank verification status
+
+loan_application → Pending loan requests
+
+loan → Approved loans & EMI details
+
+loan_emi_schedule → EMI tracking per loan
+
+repayment → Loan repayments
+
+credit_score → Customer credit scoring
+
+⚠️ Common Pitfalls & Fixes
+
+CORS Issues → Add Spring CorsConfig
+
+400 on Password Update → Use protected API client
+
+Wrong Dates → Check appliedDate in backend response
+
+🛤 Roadmap
+
+✅ JWT Auth & BMS Integration
+✅ Loan Application, Approval, EMI & Repayment
+🔄 Multi-bank account support
+📨 Email Notifications
+📈 Reports & Analytics
+🐳 Docker Compose Setup
+
+🤝 Contributing
+
+Fork the repo
+
+Create a feature branch
+
+Commit changes
+
+Open a PR with screenshots & test notes
+
+📄 License
+
+MIT License — free to use, modify & distribute.
