@@ -66,13 +66,13 @@ This repository is structured for easy local setup, extension, and deployment.
 
 - Node.js 18+ & npm / yarn
 
-- PostgreSQL 14+
+- any database server like PostgreSQL 14+, MySQL,
 
 - (Optional) Docker for DB setup
 
 🔧 Backend Setup (Spring Boot)
 ### Create PostgreSQL DB
-createdb lms
+create db lms
 
 ### Or using Docker
 docker run --name lms-postgres \
@@ -241,6 +241,64 @@ loan-management-system/
         ├── lib/             # Axios configs (api.ts, publicApi.ts)
         ├── pages/           # UI pages (Dashboard, Loans, Profile, etc.)
         └── services/        # Auth & Loan services
+BMS/
+├── .classpath
+├── .gitattributes
+├── .gitignore
+├── .project
+├── HELP.md
+├── pom.xml  (if using Maven)
+├── target/           # Compiled files (should be ignored in .gitignore)
+│
+├── src/
+│   ├── main/
+│   │   ├── java/
+│   │   │   └── com/
+│   │   │       └── BMS/
+│   │   │           └── BMS/
+│   │   │               ├── BmsApplication.java
+│   │   │               │
+│   │   │               ├── Config/
+│   │   │               │   ├── JwtFilter.java
+│   │   │               │   ├── JwtUtil.java
+│   │   │               │   └── SecurityConfig.java
+│   │   │               │
+│   │   │               ├── Controller/
+│   │   │               │   └── BankController.java
+│   │   │               │
+│   │   │               ├── DTO/
+│   │   │               │   └── LoanSummaryDTO.java
+│   │   │               │
+│   │   │               ├── Models/
+│   │   │               │   ├── BankFund.java
+│   │   │               │   ├── Customer.java
+│   │   │               │   ├── MicroDeposit.java
+│   │   │               │   └── Transaction.java
+│   │   │               │
+│   │   │               ├── Repo/
+│   │   │               │   ├── BankFundRepository.java
+│   │   │               │   ├── CustomerRepository.java
+│   │   │               │   ├── MicroDepositRepository.java
+│   │   │               │   └── TransactionRepository.java
+│   │   │               │
+│   │   │               └── Service/
+│   │   │                   ├── BankService.java
+│   │   │                   └── MailService.java
+│   │   │
+│   │   └── resources/
+│   │       ├── static/
+│   │       ├── templates/
+│   │       └── application.properties
+│   │
+│   └── test/
+│       └── java/
+│           └── com/
+│               └── BMS/
+│                   └── BMS/
+│                       └── BmsApplicationTests.java
+│
+└── README.md
+
 
   📄 License
 
