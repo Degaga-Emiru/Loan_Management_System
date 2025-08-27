@@ -5,6 +5,7 @@ It integrates with a lightweight Bank Management System (BMS) for account verifi
 
 This repository is structured for easy local setup, extension, and deployment.
 
+
 ## 📌 Table of Contents
 - [Overview](#overview)
 - [Features](#features)
@@ -46,6 +47,13 @@ This repository is structured for easy local setup, extension, and deployment.
 ---
 
 ## ⚙️🛠️Tech Stack
+![Java](https://img.shields.io/badge/Java-17-orange)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.0-brightgreen)
+![Maven](https://img.shields.io/badge/Build-Maven-blue)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6?logo=typescript&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3.4-38B2AC?logo=tailwind-css&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-316192?logo=postgresql&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-yellow)
 
 - 🎨🖥️ **Frontend**: React + Vite + TypeScript + Axios
 
