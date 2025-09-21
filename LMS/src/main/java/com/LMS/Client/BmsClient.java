@@ -1,6 +1,6 @@
 <<<<<<< HEAD
 package com.LMS.LMS.Client;
-
+// where the bms client logic goes is here
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
