@@ -1,5 +1,5 @@
 package com.BMS.BMS.Controller;
-
+// this is BankController class where the bank logic goes here
 import com.BMS.BMS.DTO.LoanSummaryDTO;
 
 import com.BMS.BMS.Service.BankService;
