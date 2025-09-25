@@ -1,4 +1,5 @@
 // src/contexts/AuthContext.tsx
+//AuthContext.tsx that contain the source code of the authentaictaion
 import React, { createContext, useContext, useEffect, useState } from "react";
 import {
   login as authLogin,
